@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Order = require("../Models/Order");
+const Order = require("../models/Order");
 const { json } = require("express");
 const {
   verifyToken,
@@ -9,7 +9,7 @@ const {
 
 //Create
 
-router.post("/", async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   const newOrder = new Order(req.body);
 
   try {
@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", async (req, res) => {
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
   try {
     const saveOrder = await Order.find();
     res.status(200).json(saveOrder);
@@ -36,11 +36,11 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
     const updateOrder = await Order.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body,
+        $set: { status: req.body.status },
       },
       { new: true }
     );
-    res.status(200).json(updateOrder);
+    res.status(200).json("Status Updated");
   } catch (err) {
     res.status(500).json(err);
   }
@@ -79,7 +79,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/stats", async (req, res) => {
+router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   try {
     const orders = await Order.count();
 

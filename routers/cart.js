@@ -1,8 +1,9 @@
+const { verifyTokenAndAdmin, verifyTokenAndAuth } = require("../JwToken");
 const Cart = require("../Models/Cart");
 
 const router = require("express").Router();
 
-router.post("/", async (req, res) => {
+router.post("/", verifyTokenAndAuth, async (req, res) => {
   const newCart = new Cart(req.body);
   try {
     const save = await newCart.save();
@@ -12,7 +13,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/find/:id", async (req, res) => {
+router.get("/find/:id", verifyTokenAndAuth, async (req, res) => {
   try {
     console.log("cart");
     const items = await Cart.find({ userId: req.params.userId });
@@ -33,7 +34,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", verifyTokenAndAuth, async (req, res) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     res.status(200).json("product has been deleted");

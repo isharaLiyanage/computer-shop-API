@@ -1,9 +1,10 @@
+const { verifyTokenAndAdmin } = require("../JwToken");
 const Product = require("../Models/Product");
 
 const router = require("express").Router();
 
 //create product
-router.post("/", async (req, res) => {
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
   const newProduct = new Product(req.body);
 
   try {
@@ -80,7 +81,7 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 //update product
-router.put("/update/:id", async (req, res) => {
+router.put("/update/:id", verifyTokenAndAdmin, async (req, res) => {
   try {
     const updateProduct = await Product.findByIdAndUpdate(
       req.params.id,
