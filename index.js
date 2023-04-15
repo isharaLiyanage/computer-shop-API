@@ -26,8 +26,7 @@ mongoose
   });
 app.use(
   cors({
-    origin: ["https://computer-shop-seven.vercel.app/"],
-    optionsSuccessStatus: 200,
+    origin: ["https://computer-shop-seven.vercel.app"],
   })
   //   {
   //   origin: "http://127.0.0.1:5173/",
