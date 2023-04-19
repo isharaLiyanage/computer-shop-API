@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Order = require("../models/Order");
+const Order = require("../Models/Order");
 const { json } = require("express");
 const {
   verifyToken,
