@@ -1,5 +1,5 @@
 const { verifyTokenAndAdmin } = require("../JwToken");
-const User = require("../models/User");
+const User = require("../Models/Users");
 
 const router = require("express").Router();
 
